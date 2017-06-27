@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<div  align="center"><h3>A simple blog system</h3>
+<img id="myImg" src="img_pulpit.jpg" alt="The Pulpit Rock" width="304" height="228"></br>
+Title:	<input type="text" id="Title" value=""></br>
+Content:	<textarea id="myText" ></textarea></br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button onclick="myFunction()">Post</button>
+<input type="file" id="selectedFile">
+
+<div id='fileDisplayArea'></div>
+
+<p id="demo"></p>
+</div>
+<script>
+var txt ="";
+function myFunction() {
+    var x = document.getElementById("myText").value;
+    var y = document.getElementById("Title").value;
+    var post = "<div>"+y + "</br>" + x + "</br>" + Date()+"</div>" + "</br>";
+    txt = txt + post;
+    document.getElementById("demo").innerHTML = txt;
+}
+</script>
+<script>
+function showFile(aFile) {
+    var fileDisplay = "";
+    if (aFile != undefined) {
+        fileDisplay = "<TABLE BORDER='1'>"
+        + "<TR><TD>Name</TD><TD> " + aFile.name + "</TD></TR>"
+        + "<TR><TD>Size</TD><TD> " + aFile.size + "</TD></TR>"
+        + "<TR><TD>Type</TD><TD> " + aFile.type + "</TD></TR>"
+                     + "</TABLE>";
+        document.getElementById('fileDisplayArea').innerHTML = fileDisplay;
+
+        // Read file contents
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var text=reader.result;
+            document.getElementById('fileDisplayArea').innerHTML += text;
+            // var myObj = JSON.parse(text);
+        }
+        reader.readAsText(aFile);
+    } else {
+        document.getElementById('fileDisplayArea').innerHTML = "";
+    }
+}
+</script>
+<script>
+// Add an event listener to invoke showFile() automatically.
+document.getElementById('selectedFile').addEventListener('change',
+    function () {showFile(this.files[0]);}, false);
+</script>
+
+</body>
+</html>
